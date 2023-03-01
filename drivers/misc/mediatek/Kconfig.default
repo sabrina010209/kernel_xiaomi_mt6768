@@ -50,6 +50,8 @@ config ANDROID_DEFAULT_SETTING
 	select EMBEDDED
 	select EPOLL
         select EROFS_FS
+        select EROFS_FS_PCPU_KTHREAD
+        select EROFS_FS_PCPU_KTHREAD_HIPRI
 	select EVENTFD
 	select EXT4_FS_POSIX_ACL if EXT4_FS
 	select F2FS_FS_POSIX_ACL if F2FS_FS
