@@ -2234,7 +2234,11 @@ static int cpufreq_set_policy(struct cpufreq_policy *policy,
 	* because new_policy is a copy of policy with one field updated.
 	*/
 	if (new_policy->min > new_policy->max)
+#if !IS_ENABLED(CONFIG_MTK_CPU_CTRL)
 		new_policy->min = new_policy->max;
+#else
+                return -EINVAL;
+#endif
 
 	/* verify the cpu speed can be set within this limit */
 	ret = cpufreq_driver->verify(new_policy);
