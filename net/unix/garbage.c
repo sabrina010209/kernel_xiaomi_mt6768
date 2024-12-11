@@ -254,7 +254,11 @@ void unix_gc(void)
 		struct sock *sk = &u->sk;
 		long total_refs;
 
+<<<<<<< HEAD
 		total_refs = file_count(sk->sk_socket->file);
+=======
+		total_refs = file_count(u->sk.sk_socket->file);
+>>>>>>> c6bef574594a (net/unix: import OEM changes)
 
 		BUG_ON(!u->inflight);
 		BUG_ON(total_refs < u->inflight);
