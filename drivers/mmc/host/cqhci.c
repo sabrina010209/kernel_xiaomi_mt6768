@@ -1107,6 +1107,16 @@ static void cqhci_recovery_finish(struct mmc_host *mmc)
 	mmc->cqe_on = false;
 	spin_unlock_irqrestore(&cq_host->lock, flags);
 
+	/*
+	 * MTK PATCH: need disable cqhci for legacy cmds coz legacy cmds using
+	 * GPD DMA and it can only work when CQHCI disable.
+	 */
+	if (cq_host->quirks & CQHCI_QUIRK_DIS_BEFORE_NON_CQ_CMD) {
+		reg = cqhci_readl(cq_host, CQHCI_CFG);
+		reg &= ~CQHCI_ENABLE;
+		cqhci_writel(cq_host, reg, CQHCI_CFG);
+	}
+
 	/* Ensure all writes are done before interrupts are re-enabled */
 	wmb();
 
